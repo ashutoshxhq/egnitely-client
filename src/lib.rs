@@ -28,7 +28,7 @@ macro_rules! register_egnitely_fn {
 macro_rules! register_egnitely_post_install_fn {
     ($func_name:ident) => {
         #[no_mangle]
-        pub extern "C" fn post_install(data_pointer: *mut c_char) -> *mut c_char {
+        pub extern "C" fn egnitely_post_install_fn(data_pointer: *mut c_char) -> *mut c_char {
             let data = unsafe { CString::from_raw(data_pointer) };
             let data_str = data.into_string().unwrap();
             println!("Recieved In Handler: {}", data_str);
@@ -49,7 +49,7 @@ macro_rules! register_egnitely_post_install_fn {
 macro_rules! register_egnitely_pre_trigger_fn {
     ($func_name:ident) => {
         #[no_mangle]
-        pub extern "C" fn pre_trigger(data_pointer: *mut c_char) -> *mut c_char {
+        pub extern "C" fn egnitely_pre_trigger_fn(data_pointer: *mut c_char) -> *mut c_char {
             let data = unsafe { CString::from_raw(data_pointer) };
             let data_str = data.into_string().unwrap();
             println!("Recieved In Handler: {}", data_str);
@@ -70,7 +70,7 @@ macro_rules! register_egnitely_pre_trigger_fn {
 macro_rules! register_egnitely_post_trigger_fn {
     ($func_name:ident) => {
         #[no_mangle]
-        pub extern "C" fn post_trigger(data_pointer: *mut c_char) -> *mut c_char {
+        pub extern "C" fn egnitely_post_trigger_fn(data_pointer: *mut c_char) -> *mut c_char {
             let data = unsafe { CString::from_raw(data_pointer) };
             let data_str = data.into_string().unwrap();
             println!("Recieved In Handler: {}", data_str);
