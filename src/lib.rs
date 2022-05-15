@@ -1,6 +1,11 @@
 #[macro_export]
 macro_rules! register_egnitely_fn {
     ($func_name:ident) => {
+        extern crate libc;
+        use libc::c_char;
+        use serde_json::{json, Value};
+        use std::ffi::CString;
+
         #[no_mangle]
         pub extern "C" fn handler(data_pointer: *mut c_char) -> *mut c_char {
             let data = unsafe { CString::from_raw(data_pointer) };
