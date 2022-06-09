@@ -6,7 +6,7 @@ macro_rules! register_egnitely_fn {
         use std::ffi::CString;
 
         #[no_mangle]
-        pub extern "C" fn $func_name(data_pointer: *mut c_char) -> *mut c_char {
+        pub extern "C" fn handler(data_pointer: *mut c_char) -> *mut c_char {
             let data = unsafe { CString::from_raw(data_pointer) };
             let data_str = data.into_string().unwrap();
             println!("Recieved In Handler: {}", data_str);
