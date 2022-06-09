@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! register_egnitely_fn {
+macro_rules! egnitely_fn {
     ($func_name:ident) => {
         extern crate libc;
         use libc::c_char;
