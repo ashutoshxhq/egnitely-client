@@ -10,11 +10,11 @@ pub struct RequestContext {
 }
 
 impl RequestContext {
-    pub fn new(template_name: String, template_version: String, aws_sdk_config: SdkConfig, data: Value, headers: Value) -> Self {
+    pub fn new(template_name: String, template_version: String, aws_sdk_config: Option<SdkConfig>, data: Value, headers: Value) -> Self {
         Self {
             template_name,
             template_version,
-            aws_sdk_config: Some(aws_sdk_config),
+            aws_sdk_config: aws_sdk_config,
             data,
             headers,
         }
