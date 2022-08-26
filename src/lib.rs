@@ -14,7 +14,7 @@ impl RequestContext {
         Self {
             template_name,
             template_version,
-            aws_sdk_config,
+            aws_sdk_config: Some(aws_sdk_config),
             data,
             headers,
         }
@@ -26,7 +26,7 @@ impl RequestContext {
     pub fn template_version(&mut self) -> String {
         self.template_version.clone()
     }
-    pub fn aws_sdk_config(&mut self) -> SdkConfig {
+    pub fn aws_sdk_config(&mut self) -> Option<SdkConfig> {
         self.aws_sdk_config.clone()
     }
     pub fn data(&mut self) -> Value {
