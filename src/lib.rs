@@ -39,6 +39,7 @@ impl RequestContext {
     }
 }
 
+pub type Result<T> = std::result::Result<T, Box<dyn error::Error>>;
 
 #[derive(Debug)]
 pub struct HandlerError {
