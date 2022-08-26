@@ -1,5 +1,7 @@
 use aws_config::SdkConfig;
 use serde_json::Value;
+use std::error;
+use std::fmt;
 
 pub struct RequestContext {
     template_name: String,
@@ -36,3 +38,24 @@ impl RequestContext {
         self.headers.clone()
     }
 }
+
+
+#[derive(Debug)]
+pub struct HandlerError {
+    message: String,
+    code: String,
+}
+
+impl HandlerError {
+    pub fn new(code:String, message:String)-> Self {
+        Self { message, code }
+    }
+}
+
+impl fmt::Display for HandlerError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}: {})", self.code, self.message)
+    }
+}
+
+impl error::Error for HandlerError {}
