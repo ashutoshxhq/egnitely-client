@@ -4,7 +4,7 @@ use serde_json::Value;
 pub struct RequestContext {
     template_name: String,
     template_version: String,
-    aws_sdk_config: SdkConfig,
+    aws_sdk_config: Option<SdkConfig>,
     data: Value,
     headers: Value,
 }
