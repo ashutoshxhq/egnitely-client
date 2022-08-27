@@ -1,7 +1,11 @@
 [package]
-name = "egnitely-client"
+name = "egnitely_client"
 version = "0.1.0"
+description = "Client library of Egnitely which contains helpers to build functions"
 edition = "2021"
+license = "MIT OR Apache-2.0"
+homepage = "https://egnitely.com/"
+repository = "https://github.com/egnitely/egnitely-client/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
