@@ -1,6 +1,6 @@
 [package]
 name = "egnitely_client"
-version = "0.1.0"
+version = "0.1.1"
 description = "Client library of Egnitely which contains helpers to build functions"
 edition = "2021"
 license = "MIT OR Apache-2.0"
@@ -14,4 +14,3 @@ libc = "0.2.125"
 serde = "1.0.137"
 serde_json = "1.0.81"
 tokio = {version = "1.18.2", features = ["full"]}
-aws-config = "0.47.0"

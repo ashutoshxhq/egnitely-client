@@ -1,22 +1,24 @@
-use aws_config::SdkConfig;
 use serde_json::Value;
 use std::error;
 use std::fmt;
 
-pub struct RequestContext {
+pub struct Context {
     template_name: String,
     template_version: String,
-    aws_sdk_config: Option<SdkConfig>,
     data: Value,
     headers: Value,
 }
 
-impl RequestContext {
-    pub fn new(template_name: String, template_version: String, aws_sdk_config: Option<SdkConfig>, data: Value, headers: Value) -> Self {
+impl Context {
+    pub fn new(
+        template_name: String,
+        template_version: String,
+        data: Value,
+        headers: Value,
+    ) -> Self {
         Self {
             template_name,
             template_version,
-            aws_sdk_config: aws_sdk_config,
             data,
             headers,
         }
@@ -28,9 +30,6 @@ impl RequestContext {
     pub fn template_version(&mut self) -> String {
         self.template_version.clone()
     }
-    pub fn aws_sdk_config(&mut self) -> Option<SdkConfig> {
-        self.aws_sdk_config.clone()
-    }
     pub fn data(&mut self) -> Value {
         self.data.clone()
     }
@@ -39,23 +38,32 @@ impl RequestContext {
     }
 }
 
-pub type Result<T> = std::result::Result<T, Box<dyn error::Error>>;
+pub type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 
 #[derive(Debug)]
 pub struct HandlerError {
-    message: String,
-    code: String,
+    error_message: String,
+    error_code: String,
+    status_code: u32,
 }
 
 impl HandlerError {
-    pub fn new(code:String, message:String)-> Self {
-        Self { message, code }
+    pub fn new(error_code: String, error_message: String, status_code: u32) -> Box<Self> {
+        Box::new(Self {
+            error_code,
+            error_message,
+            status_code,
+        })
     }
 }
 
 impl fmt::Display for HandlerError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "({}: {})", self.code, self.message)
+        write!(
+            f,
+            "({} ({}): {})",
+            self.error_code, self.status_code, self.error_message
+        )
     }
 }
 
