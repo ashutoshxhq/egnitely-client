@@ -1,38 +1,55 @@
+use std::collections::HashMap;
 use serde_json::Value;
 
+#[derive(Debug, Clone, Default)]
+pub struct ApplicationContext {
+    pub name: String,
+    pub version: String,
+    pub config: Value,
+    
+}
 
+#[derive(Debug, Default)]
+pub struct FunctionRequest {
+    json: Option<Value>,
+    path: Option<HashMap<String, Value>>,
+    query: Option<HashMap<String, Value>>,
+    form: Option<HashMap<String, Value>>,
+    multipart: Option<multer::Multipart<'static>>,
+}
+
+#[derive(Debug, Default)]
 pub struct Context {
-    template_name: String,
-    template_version: String,
-    config: Value,
-    request: Value,
+    pub application: ApplicationContext,
+    pub request: FunctionRequest,
 }
 
 impl Context {
-    pub fn new(
-        template_name: String,
-        template_version: String,
-        config: Value,
-        request: Value,
-    ) -> Self {
+    pub fn new(application: ApplicationContext, request: FunctionRequest) -> Self {
         Self {
-            template_name,
-            template_version,
-            config,
+            application,
             request,
         }
     }
 
-    pub fn template_name(&mut self) -> String {
-        self.template_name.clone()
+    pub fn json(&self) -> Option<Value> {
+        self.request.json.clone()
     }
-    pub fn template_version(&mut self) -> String {
-        self.template_version.clone()
+
+    pub fn path(&self) -> Option<HashMap<String, Value>> {
+        self.request.path.clone()
     }
-    pub fn config(&mut self) -> Value {
-        self.config.clone()
+
+    pub fn query(&self) -> Option<HashMap<String, Value>> {
+        self.request.query.clone()
     }
-    pub fn request(&mut self) -> Value {
-        self.request.clone()
+
+    pub fn form(&self) -> Option<HashMap<String, Value>> {
+        self.request.form.clone()
     }
+
+    pub fn multipart(&self) -> Option<&multer::Multipart<'static>> {
+        self.request.multipart.as_ref()
+    }
+    
 }
