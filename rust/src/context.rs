@@ -1,12 +1,21 @@
-use std::collections::HashMap;
 use serde_json::Value;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Default)]
 pub struct ApplicationContext {
     pub name: String,
     pub version: String,
     pub config: Value,
-    
+}
+
+impl ApplicationContext {
+    pub fn new(name: String, version: String, config: Value) -> Self {
+        Self {
+            name,
+            version,
+            config,
+        }
+    }
 }
 
 #[derive(Debug, Default)]
@@ -16,6 +25,24 @@ pub struct FunctionRequest {
     query: Option<HashMap<String, Value>>,
     form: Option<HashMap<String, Value>>,
     multipart: Option<multer::Multipart<'static>>,
+}
+
+impl FunctionRequest {
+    pub fn new(
+        json: Option<Value>,
+        path: Option<HashMap<String, Value>>,
+        query: Option<HashMap<String, Value>>,
+        form: Option<HashMap<String, Value>>,
+        multipart: Option<multer::Multipart<'static>>,
+    ) -> Self {
+        Self {
+            json,
+            path,
+            query,
+            form,
+            multipart,
+        }
+    }
 }
 
 #[derive(Debug, Default)]
@@ -51,5 +78,4 @@ impl Context {
     pub fn multipart(&self) -> Option<&multer::Multipart<'static>> {
         self.request.multipart.as_ref()
     }
-    
 }
